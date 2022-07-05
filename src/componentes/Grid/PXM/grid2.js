@@ -18,9 +18,8 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 //GENERA PDF
 import jsPDF from 'jspdf'
 
-
-const urlApi = ' http://127.0.0.1:4444/menu';
-const urlApi2 = 'http://127.0.0.1:4444/proxmen'
+const urlApi = process.env.REACT_APP_URL_SERVER + '/menu';
+const urlApi2 = process.env.REACT_APP_URL_SERVER + '/proxmen'
 
 function PmGrid() {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -45,6 +44,8 @@ function PmGrid() {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const [archPdf, setArchPDF] = useState(null);
+
+    console.log(process.env)
 
     const key = 'updatable';
 

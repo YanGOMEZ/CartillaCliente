@@ -21,8 +21,8 @@ import Highlighter from "react-highlight-words";
 import SaveModalMenu from "./saveModalMenu";
 
 
-const urlApi = ' http://127.0.0.1:4444/menu';
-const urlApisub = ' http://127.0.0.1:4444/submenu';
+const urlApi = process.env.REACT_APP_URL_SERVER + '/menu';
+const urlApisub = process.env.REACT_APP_URL_SERVER + '/submenu';
 
 function CustomGrid() {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
