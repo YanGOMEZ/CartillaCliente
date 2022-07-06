@@ -8,14 +8,16 @@ import {
 } from "react-router-dom";
 
 function App() {
+  console.log(process.env)
+
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"  element={<Login />} />
-        <Route path="/inicio/*" element={<Inicio />} />
-      </Routes>
-    </BrowserRouter> 
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/inicio/*" element={<Inicio />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
