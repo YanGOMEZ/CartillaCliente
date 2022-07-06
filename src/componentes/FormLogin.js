@@ -14,7 +14,15 @@ const App = () => {
 
   //Metodo de logeo
   const onFinish = async (values) => {
-    await axios.post(urlApi, values).then((response) => {
+    await axios.post(urlApi, values, {
+
+      "headers": {
+
+        "content-type": "application/json",
+
+      },
+
+    }).then((response) => {
       console.log(response.data);
       arrayCookie.set('menu', response.data.menus, { path: '/inicio' })
       message.loading({
