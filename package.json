@@ -2,7 +2,7 @@
   "name": "ant-navegacion",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://angelontm.github.io/Cartilla",
+  "homepage": "http://angelontm.github.io/CartillaCliente",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
