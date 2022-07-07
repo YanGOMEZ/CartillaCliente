@@ -1,6 +1,5 @@
 import { Button, Form, Input, message } from 'antd';
 import React from 'react';
-import 'antd/dist/antd.min.css';
 import axios from "axios";
 import Cookies from "universal-cookie";
 import '../estilos.css';
@@ -14,15 +13,7 @@ const App = () => {
 
   //Metodo de logeo
   const onFinish = async (values) => {
-    await axios.post(urlApi, values, {
-
-      "headers": {
-
-        "content-type": "application/json",
-
-      },
-
-    }).then((response) => {
+    await axios.post(urlApi, values).then((response) => {
       console.log(response.data);
       arrayCookie.set('menu', response.data.menus, { path: '/inicio' })
       message.loading({

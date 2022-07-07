@@ -2,8 +2,6 @@ import { Form, Input, Button, message, Upload } from 'antd';
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import '../../../componentes.css';
-import 'antd/dist/antd.min.css';
-import { UploadOutlined } from '@ant-design/icons';
 import Question from '../../../Question';
 import { Autocomplete, TextField } from '@mui/material';
 

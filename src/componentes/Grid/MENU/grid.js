@@ -5,7 +5,6 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import '../../../componentes.css';
 import ReactDragListView from "react-drag-listview";
 import { UnorderedListOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
 import { Autocomplete, TextField } from "@mui/material";
 
 //PDF
