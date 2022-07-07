@@ -45,7 +45,6 @@ function PmGrid() {
     const searchInput = useRef(null);
     const [archPdf, setArchPDF] = useState(null);
 
-    console.log(process.env)
 
     const key = 'updatable';
 
