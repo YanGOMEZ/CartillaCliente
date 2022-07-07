@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Cartilla/static/css/main.a45d1b3e.css",
-    "main.js": "/Cartilla/static/js/main.141a57e4.js",
-    "static/js/498.72888d7b.chunk.js": "/Cartilla/static/js/498.72888d7b.chunk.js",
-    "static/js/703.38556b34.chunk.js": "/Cartilla/static/js/703.38556b34.chunk.js",
-    "static/js/142.a12ea56a.chunk.js": "/Cartilla/static/js/142.a12ea56a.chunk.js",
-    "static/js/787.c718068a.chunk.js": "/Cartilla/static/js/787.c718068a.chunk.js",
-    "static/media/logopiki.png": "/Cartilla/static/media/logopiki.50e1e5055c655cf7092a.png",
-    "static/media/plus.jpeg": "/Cartilla/static/media/plus.f6830b6086e5c278cfb1.jpeg",
-    "index.html": "/Cartilla/index.html",
-    "main.a45d1b3e.css.map": "/Cartilla/static/css/main.a45d1b3e.css.map",
-    "main.141a57e4.js.map": "/Cartilla/static/js/main.141a57e4.js.map",
-    "498.72888d7b.chunk.js.map": "/Cartilla/static/js/498.72888d7b.chunk.js.map",
-    "703.38556b34.chunk.js.map": "/Cartilla/static/js/703.38556b34.chunk.js.map",
-    "142.a12ea56a.chunk.js.map": "/Cartilla/static/js/142.a12ea56a.chunk.js.map",
-    "787.c718068a.chunk.js.map": "/Cartilla/static/js/787.c718068a.chunk.js.map"
+    "main.css": "/CartillaCliente/static/css/main.a45d1b3e.css",
+    "main.js": "/CartillaCliente/static/js/main.2895fbbf.js",
+    "static/js/498.72888d7b.chunk.js": "/CartillaCliente/static/js/498.72888d7b.chunk.js",
+    "static/js/703.38556b34.chunk.js": "/CartillaCliente/static/js/703.38556b34.chunk.js",
+    "static/js/142.a12ea56a.chunk.js": "/CartillaCliente/static/js/142.a12ea56a.chunk.js",
+    "static/js/787.c718068a.chunk.js": "/CartillaCliente/static/js/787.c718068a.chunk.js",
+    "static/media/logopiki.png": "/CartillaCliente/static/media/logopiki.50e1e5055c655cf7092a.png",
+    "static/media/plus.jpeg": "/CartillaCliente/static/media/plus.f6830b6086e5c278cfb1.jpeg",
+    "index.html": "/CartillaCliente/index.html",
+    "main.a45d1b3e.css.map": "/CartillaCliente/static/css/main.a45d1b3e.css.map",
+    "main.2895fbbf.js.map": "/CartillaCliente/static/js/main.2895fbbf.js.map",
+    "498.72888d7b.chunk.js.map": "/CartillaCliente/static/js/498.72888d7b.chunk.js.map",
+    "703.38556b34.chunk.js.map": "/CartillaCliente/static/js/703.38556b34.chunk.js.map",
+    "142.a12ea56a.chunk.js.map": "/CartillaCliente/static/js/142.a12ea56a.chunk.js.map",
+    "787.c718068a.chunk.js.map": "/CartillaCliente/static/js/787.c718068a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a45d1b3e.css",
-    "static/js/main.141a57e4.js"
+    "static/js/main.2895fbbf.js"
   ]
 }
