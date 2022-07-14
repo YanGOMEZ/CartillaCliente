@@ -463,7 +463,10 @@ function PmGrid() {
     return (
 
         <div >
+            <br></br>
             <Row>
+                <Col offset={2} lg={20} md={20} sm={20} xs={20}>
+                <Row>
                 <Col xs={22} sm={20} md={16} lg={10}>
                     <Select defaultValue={men} style={{ width: '100%' }} onChange={e => handleChange(e)}>
                         {dataLIST}
@@ -472,34 +475,31 @@ function PmGrid() {
                 <Col style={{ marginLeft: 10 }} xs={1} sm={2} md={4} lg={7}>
                     {estado ? <FormPXM tb={data2} op={data3.length + 1} valor={men} padre={handler} /> : undefined}
                 </Col>
-                <Col><Button type='primary' disabled={inputs} htmlType="submit" onClick={() => {
-                    visibleModal()
-                }}>IMPRIMIR</Button>
-                </Col>
             </Row><br></br>
             <Row>
-                <Col span={21} >
-
-                </Col>
-                <Col span={1} >
+                <Col span={1} lg={1} md={24} sm={24} xs={24} >
                     <Button onClick={() => {
                         traerTabla()
                     }}>
                         <ReloadOutlined />
                     </Button>
                 </Col>
-                <Col span={1} >
+                <Col span={1} lg={1} md={24} sm={24} xs={24} >
                     <Button type="danger" disabled={deleteMany} onClick={() => {
                         deleteManySelected()
                     }}>
                         <DeleteOutlined />
                     </Button>
                 </Col>
-                <Col span={1}>
+                <Col span={1} lg={1} md={24} sm={24} xs={24}>
                     <Dropdown overlay={menu} onVisibleChange={handleVisibleChange}
                         visible={dropdownVisible} placement="bottomLeft">
                         <Button><UnorderedListOutlined style={{ fontSize: '16px', color: '#08c' }} /></Button>
                     </Dropdown>
+                </Col>
+                <Col span={1} lg={1} md={24} sm={24} xs={24}><Button type='primary' disabled={inputs} htmlType="submit" onClick={() => {
+                    visibleModal()
+                }}>IMPRIMIR</Button>
                 </Col>
             </Row><br></br>
             <ReactDragListView.DragColumn onDragEnd={OnDragEnd} nodeSelector="th">
@@ -512,6 +512,9 @@ function PmGrid() {
                     size="middle"
                 />
             </ReactDragListView.DragColumn>
+                </Col>
+            </Row>
+
             <Modal title="Editar orden" okText="Actualizar" cancelText="Regresar" visible={edit} onCancel={() => {
                 setEdit(false)
             }} onOk={() => {

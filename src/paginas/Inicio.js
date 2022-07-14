@@ -11,6 +11,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import GridModulo from '../componentes/Grid/MODULO/gridModulo';
 
 
 
@@ -37,7 +38,7 @@ export default function Inicio() {
         </Header>
           <Content>
           <Routes>
-          <Route path="eje1"  element={<CustomGrid />} />
+          <Route path="eje1"  element={<GridModulo />} />
           <Route path="eje2"  element={<PmGrid />} />
           </Routes>
           </Content> 

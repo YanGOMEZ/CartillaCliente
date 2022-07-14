@@ -1,3 +1,6 @@
+/* gridModulo, despliega un grid que puede manipular la información de los modulos */
+
+/* Includes o Imports */
 import { Button, Col, Input, Modal, Row, Table, Dropdown, Menu, Checkbox, message, Upload, Space } from "antd";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
@@ -6,70 +9,48 @@ import '../../../componentes.css';
 import ReactDragListView from "react-drag-listview";
 import { UnorderedListOutlined } from '@ant-design/icons';
 import { Autocomplete, TextField } from "@mui/material";
-
 //PDF
 import { Worker } from '@react-pdf-viewer/core';
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-//GENERA PDF
 import jsPDF from 'jspdf'
 import { SearchOutlined } from "@mui/icons-material";
 import Highlighter from "react-highlight-words";
-import SaveModalMenu from "./saveModalMenu";
-import App1 from "./test";
+import SaveModalModule from "./saveModalModule";
 
+/* Variables generales */
+const urlApi = process.env.REACT_APP_URL_SERVER + '/modulo';
 
-const urlApi = process.env.REACT_APP_URL_SERVER + '/menu';
-const urlApisub = process.env.REACT_APP_URL_SERVER + '/submenu';
-
-function CustomGrid() {
+function GridModulo() {
+    /* Variables locales */
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const [data, setData] = useState([])
     const [edit, setEdit] = useState(false);
     const [editMenu, setEditMenu] = useState(null);
     const [nombre, setNombre] = useState("")
-    const [ORD, setORD] = useState("MEN_CLAVE")
     const [BY, setBY] = useState("ASC")
     const [deleteMany, setDeleteMany] = useState(true)
     const [selectedRowKeys, setSelectedRowKeys] = useState([])
-    const [datasub, setDatasub] = useState([])
     const [fileList, setFileList] = useState([])
     const [valid, setValid] = useState("")
     const [img, setImg] = useState("")
     const [archPdf, setArchPDF] = useState(null);
     const [modal, setModal] = useState(false);
-
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null)
 
 
 
+    /* Funciones */
     useEffect(() => {
         traerTabla()
-        traerTabla2()
     }, [nombre, BY, fileList, img])
 
-    const traerTabla2 = async () => {
-        axios.post(urlApisub, {}, {
-
-            "headers": {
-
-                "content-type": "application/json",
-
-            },
-
-        }).then((response) =>
-            setDatasub(response.data)
-        ).catch(error => {
-            console.log(error);
-        })
-    }
-
     const traerTabla = async () => {
-        axios.post(urlApi, { MEN_NOMBRE: nombre, ORDER: ORD, BY: BY }, {
+        axios.post(urlApi, {}, {
 
             "headers": {
 
@@ -93,7 +74,7 @@ function CustomGrid() {
             okType: 'danger',
             cancelText: 'Cancelar',
             onOk: () => {
-                axios.delete(urlApi + "/" + record.MEN_NUMCTRL).then((response) => {
+                axios.delete(urlApi + "/" + record.MOD_NUMCTRL).then((response) => {
                     traerTabla()
                 })
             }
@@ -108,7 +89,7 @@ function CustomGrid() {
             cancelText: 'Cancelar',
             onOk: () => {
                 selectedRowKeys.forEach((key) => {
-                    axios.delete(urlApi + "/" + key.MEN_NUMCTRL).then((response) => {
+                    axios.delete(urlApi + "/" + key.MOD_NUMCTRL).then((response) => {
                         traerTabla()
                     })
                 })
@@ -124,44 +105,19 @@ function CustomGrid() {
             okType: 'danger',
             cancelText: 'Cancelar',
             onOk: () => {
-                var cantidad = 0
-                for (let index = 0; index < data.length; index++) {
-                    if (data[index].SUM_NUMCTRL == editMenu?.SUM_NUMCTRL) {
-                        cantidad = cantidad + 1
-                    }
-                }
-                if (editMenu?.MEN_ORDEN > cantidad) {
-                    message.error({
-                        content: 'Elegiste un orden mayor al limite!', duration: 4, style: {
-                            marginTop: '18vh',
-                        },
-                    });
-                }
-                else if (editMenu?.MEN_ORDEN <= 0) {
-                    message.error({
-                        content: 'Elegiste un orden menor al limite!', duration: 4, style: {
-                            marginTop: '18vh',
-                        },
-                    });
+                if (img.length != 0 && valid == "YES") {
+                    const data = { MOD_CLAVE: editMenu?.MOD_CLAVE, MOD_NOMBRE: editMenu?.MOD_NOMBRE, MOD_ICONO: img, MOD_DESC: editMenu?.MOD_DESC}
+                    console.log(data)
+                    axios.put(urlApi + "/" + editMenu?.MOD_NUMCTRL, data).then((response) => {
+                        traerTabla()
+                    })
                 }
                 else {
-                    var im
-                    console.log(editMenu?.MEN_ICON.length + " edit")
-                    console.log(img.length)
-                    if (img.length != 0 && valid == "YES") {
-                        const data = { MEN_ORDEN: editMenu?.MEN_ORDEN, MEN_CLAVE: editMenu?.MEN_CLAVE, MEN_NOMBRE: editMenu?.MEN_NOMBRE, MEN_ICON: img, MEN_DESC: editMenu?.MEN_DESC, SUM_NUMCTRL: editMenu?.SUM_NUMCTRL }
-                        console.log(data)
-                        axios.put(urlApi + "/" + editMenu?.MEN_NUMCTRL, data).then((response) => {
-                            traerTabla()
-                        })
-                    }
-                    else {
-                        const data = { MEN_ORDEN: editMenu?.MEN_ORDEN, MEN_CLAVE: editMenu?.MEN_CLAVE, MEN_NOMBRE: editMenu?.MEN_NOMBRE, MEN_DESC: editMenu?.MEN_DESC, SUM_NUMCTRL: editMenu?.SUM_NUMCTRL }
-                        console.log(data)
-                        axios.put(urlApi + "/" + editMenu?.MEN_NUMCTRL, data).then((response) => {
-                            traerTabla()
-                        })
-                    }
+                    const data = { MOD_CLAVE: editMenu?.MOD_CLAVE, MOD_NOMBRE: editMenu?.MOD_NOMBRE, MOD_DESC: editMenu?.MOD_DESC}
+                    console.log(data)
+                    axios.put(urlApi + "/" + editMenu?.MOD_NUMCTRL, data).then((response) => {
+                        traerTabla()
+                    })
                 }
             }
         })
@@ -255,55 +211,36 @@ function CustomGrid() {
         {
             orden: 1,
             title: <span className="dragHandler">CLAVE</span>,
-            dataIndex: 'MEN_CLAVE',
-            key: 'MEN_CLAVE',
+            dataIndex: 'MOD_CLAVE',
+            key: 'MOD_CLAVE',
             sorter: (a, b) => a.MEN_CLAVE.localeCompare(b.MEN_CLAVE),
-            ...getColumnSearchProps('MEN_CLAVE', 'CLAVE'),
+            ...getColumnSearchProps('MOD_CLAVE', 'CLAVE'),
             visible: true,
         },
         {
             orden: 2,
             title: <span className="dragHandler">MENÚ</span>,
-            dataIndex: 'MEN_NOMBRE',
-            key: 'MEN_NOMBRE',
+            dataIndex: 'MOD_NOMBRE',
+            key: 'MOD_NOMBRE',
             sorter: (a, b) => a.MEN_NOMBRE.localeCompare(b.MEN_NOMBRE),
-            ...getColumnSearchProps('MEN_NOMBRE', 'MENÚ'),
+            ...getColumnSearchProps('MOD_NOMBRE', 'MENÚ'),
             visible: true,
         },
         {
             orden: 3,
             title: <span className="dragHandler">DESCRIPCIÓN</span>,
-            dataIndex: 'MEN_DESC',
-            key: 'MEN_DESC',
+            dataIndex: 'MOD_DESC',
+            key: 'MOD_DESC',
             sorter: (a, b) => a.MEN_DESC.localeCompare(b.MEN_DESC),
-            ...getColumnSearchProps('MEN_DESC', 'DESCRIPCIÓN'),
+            ...getColumnSearchProps('MOD_DESC', 'DESCRIPCIÓN'),
             visible: true,
         },
         {
             orden: 4,
-            title: <span className="dragHandler">ETIQUETA</span>,
-            dataIndex: 'SUM_ETIQUETA',
-            key: 'SUM_ETIQUETA',
-            sorter: (a, b) => a.SUM_ETIQUETA.localeCompare(b.SUM_ETIQUETA),
-            ...getColumnSearchProps('SUM_ETIQUETA', 'ETIQUETA'),
-            visible: true,
-        },
-        {
-            orden: 5,
-            width:20,
-            title: <span className="dragHandler">ORDEN</span>,
-            dataIndex: 'MEN_ORDEN',
-            key: 'MEN_ORDEN',
-            sorter: (a, b) => a.MEN_ORDEN - b.MEN_ORDEN,
-            ...getColumnSearchProps('MEN_ORDEN', 'ORDEN'),
-            visible: true,
-        },
-        {
-            orden: 6,
             width:20,
             title: <span className="dragHandler">ICONO</span>,
-            dataIndex: 'MEN_ICON',
-            key: 'MEN_ICON',
+            dataIndex: 'MOD_ICONO',
+            key: 'MOD_ICONO',
             render: (record) => {
                 return <>
                     <img width={30} height={30} src={record}></img>
@@ -340,7 +277,7 @@ function CustomGrid() {
 
     const changeData = () => {
         data.forEach(v => {
-            v.key = v.MEN_NUMCTRL
+            v.key = v.MOD_NUMCTRL
             /*             v.MAS_FECHANAC = new Date(v.MAS_FECHANAC).toLocaleDateString() */
         })
     }
@@ -360,24 +297,6 @@ function CustomGrid() {
             }
         }
     };
-
-    const existentes = () => {
-        for (let index = 0; index < datasub.length; index++) {
-            const element = { label: datasub[index].SUM_ETIQUETA, valor: datasub[index].SUM_NUMCTRL }
-            exist.push(element)
-        }
-    }
-
-    const exist = []
-
-    const ordenar = () => {
-        if (BY === "ASC") {
-            setBY("DESC")
-        }
-        else {
-            setBY("ASC")
-        }
-    }
 
     const OnDragEnd = (fromIndex, toIndex) => {
         const columnsCopy = columns1.slice();
@@ -447,21 +366,21 @@ function CustomGrid() {
         const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
         var doc = new jsPDF('p', 'pt');
         doc.setFont(undefined, 'bold')
-        doc.text(160, 30, 'Reporte de catálogo de menús.')
+        doc.text(200, 30, 'Reporte de modulos.')
 
         doc.setFont('helvetica')
         var renglon = 150
-        doc.text(400, 60, "Fecha: " + date)
+        doc.text(440, 60, "Fecha: " + date)
         doc.text(20, 120, "Clave")
-        doc.text(150, 120, "Etiqueta")
-        doc.text(300, 120, "Descripción")
+        doc.text(160, 120, "Nombre")
+        doc.text(340, 120, "Descripción")
         doc.text(525, 120, "Icono")
         doc.setFont(undefined, 'normal')
         for (let index = 0; index < data.length; index++) {
-            doc.text(20, renglon, data[index].MEN_CLAVE)
-            doc.text(110, renglon, data[index].SUM_ETIQUETA + " ")
-            doc.text(280, renglon, data[index].MEN_DESC + " ")
-            doc.addImage(data[index].MEN_ICON, 'JPEG', 535, renglon - 15, 20, 20);
+            doc.text(20, renglon, data[index].MOD_CLAVE + " ")
+            doc.text(160, renglon, data[index].MOD_NOMBRE + " ")
+            doc.text(340, renglon, data[index].MOD_DESC + " ")
+            doc.addImage(data[index].MOD_ICONO, 'JPEG', 535, renglon - 15, 20, 20);
             renglon = renglon + 30
         }
 
@@ -475,39 +394,32 @@ function CustomGrid() {
             onClick={onClick}
             items={[
                 {
-                    key: 'MEN_CLAVE',
+                    key: 'MOD_CLAVE',
                     label: (<Checkbox defaultChecked={true}>CLAVE</Checkbox>)
                 },
                 {
-                    key: 'MEN_NOMBRE',
+                    key: 'MOD_NOMBRE',
                     label: (<Checkbox defaultChecked={true}>MENÚ</Checkbox>)
                 },
                 {
-                    key: 'MEN_DESC',
+                    key: 'MOD_DESC',
                     label: (<Checkbox defaultChecked={true}>DESCRIPCIÓN</Checkbox>)
                 },
                 {
-                    key: 'SUM_ETIQUETA',
-                    label: (<Checkbox defaultChecked={true}>ETIQUETA</Checkbox>)
-                },
-                {
-                    key: 'MEN_ORDEN',
-                    label: (<Checkbox defaultChecked={true}>ORDEN</Checkbox>)
-                },
-                {
-                    key: 'MEN_ICON',
+                    key: 'MOD_ICONO',
                     label: (<Checkbox defaultChecked={true}>ICONO</Checkbox>)
                 },
             ]}
         />
     );
 
+    /* Vista */
     return (
 
         <div >
             <Row>
                 <Col lg={24} md={24} sm={24} xs={24}>
-                    <SaveModalMenu />
+                    <SaveModalModule />
                 </Col>
             </Row>
             <br></br>
@@ -553,39 +465,21 @@ function CustomGrid() {
                 setEdit(false)
             }}>
                 <label>Clave</label>
-                <Input value={editMenu?.MEN_CLAVE} required={true} onChange={(x) => {
+                <Input value={editMenu?.MOD_CLAVE} required={true} onChange={(x) => {
                     setEditMenu((pre) => {
-                        return { ...pre, MEN_CLAVE: x.target.value }
+                        return { ...pre, MOD_CLAVE: x.target.value }
                     })
                 }} /><br></br><br></br>
                 <label>Nombre</label>
-                <Input value={editMenu?.MEN_NOMBRE} required={true} onChange={(x) => {
+                <Input value={editMenu?.MOD_NOMBRE} required={true} onChange={(x) => {
                     setEditMenu((pre) => {
-                        return { ...pre, MEN_NOMBRE: x.target.value }
+                        return { ...pre, MOD_NOMBRE: x.target.value }
                     })
                 }} /><br></br><br></br>
                 <label>Descripción</label>
-                <Input value={editMenu?.MEN_DESC} required={true} onChange={(x) => {
+                <Input value={editMenu?.MOD_DESC} required={true} onChange={(x) => {
                     setEditMenu((pre) => {
-                        return { ...pre, MEN_DESC: x.target.value }
-                    })
-                }} /><br></br><br></br>
-
-                <Autocomplete onClick={existentes()} onChange={(evemt, value) => setEditMenu((pre) => {
-                    return { ...pre, SUM_NUMCTRL: value.valor }
-                })}
-                    disablePortal
-                    getOptionLabel={(option) => option.label}
-                    isOptionEqualToValue={(option) => option.valor}
-                    id="combo-box-demo"
-                    options={exist}
-                    sx={{ width: 315 }}
-                    renderInput={(params) => <TextField {...params} label={editMenu?.SUM_ETIQUETA} />}
-                /><br></br>
-                <label>Orden</label>
-                <Input value={editMenu?.MEN_ORDEN} placeholder="ORDEN" onChange={(x) => {
-                    setEditMenu((pre) => {
-                        return { ...pre, MEN_ORDEN: x.target.value }
+                        return { ...pre, MOD_DESC: x.target.value }
                     })
                 }} /><br></br><br></br>
 
@@ -621,4 +515,4 @@ function CustomGrid() {
     )
 
 }
-export default CustomGrid;
+export default GridModulo;
