@@ -2,7 +2,7 @@ import React from 'react'
 import '../estilos.css';
 import Cookies from "universal-cookie";
 import { Layout } from 'antd';
-
+//
 import Menu from '../componentes/menu';
 import CustomGrid from '../componentes/Grid/MENU/grid';
 import PmGrid from '../componentes/Grid/PXM/grid2';
